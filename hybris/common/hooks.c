@@ -91,6 +91,16 @@ extern int my_property_list(void (*propfn)(const char *key, const char *value, v
 void *__get_tls(void) __attribute__((weak));
 HYBRIS_IMPLEMENT_HOOK_VOID(__get_tls);
 
+// Weak hooks for android_fdsan_* functions required by modern bionic
+int android_fdsan_set_error_level(int new_level) __attribute__((weak));
+HYBRIS_IMPLEMENT_HOOK(android_fdsan_set_error_level, int, int new_level)
+
+uint64_t android_fdsan_exchange_owner_tag(int fd, uint64_t expected_tag, uint64_t new_tag) __attribute__((weak));
+HYBRIS_IMPLEMENT_HOOK(android_fdsan_exchange_owner_tag, uint64_t, int fd, uint64_t expected_tag, uint64_t new_tag)
+
+int android_fdsan_close_with_tag(int fd, uint64_t tag) __attribute__((weak));
+HYBRIS_IMPLEMENT_HOOK(android_fdsan_close_with_tag, int, int fd, uint64_t tag)
+
 #ifdef WANT_ARM_TRACING
 #include "wrappers.h"
 #endif
