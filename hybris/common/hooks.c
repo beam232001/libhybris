@@ -87,6 +87,10 @@ extern int my_property_list(void (*propfn)(const char *key, const char *value, v
 
 #include "dso_handle_counters.h"
 
+// Weak hook for __get_tls used in modern Android (AOSP 14/15+)
+void *__get_tls(void) __attribute__((weak));
+HYBRIS_IMPLEMENT_HOOK_VOID(__get_tls);
+
 #ifdef WANT_ARM_TRACING
 #include "wrappers.h"
 #endif
