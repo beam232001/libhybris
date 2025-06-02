@@ -3976,3 +3976,12 @@ void* hybris_get_exported_namespace(const char* name)
     return android_get_exported_namespace(name);
 }
 
+// --- Android dynamic linker compatibility stubs ---
+
+// See bionic/linker/linker_globals.h (used for symbol resolution tracking)
+void* __loader_shared_globals() __attribute__((weak));
+HYBRIS_IMPLEMENT_HOOK_VOID(__loader_shared_globals, void*)
+
+// Used by dlopen_ext / warning emission logic in newer linker
+void android_dlwarning(void* obj, void (*f)(void*, const char*)) __attribute__((weak));
+HYBRIS_IMPLEMENT_HOOK(android_dlwarning, void, void*, void (*)(void*, const char*))
