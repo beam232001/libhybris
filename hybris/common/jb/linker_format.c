@@ -35,6 +35,15 @@
 #include <stdint.h>
 #include <stddef.h>
 #include "linker_format.h"
+
+#ifndef __BIONIC_HAVE_STRUCT_IOVEC
+struct iovec {
+    void* iov_base;
+    size_t iov_len;
+};
+#define __BIONIC_HAVE_STRUCT_IOVEC 1
+#endif
+
 #include "linker_debug.h"
 
 /* define UNIT_TESTS to build this file as a single executable that runs
