@@ -101,6 +101,19 @@ HYBRIS_IMPLEMENT_HOOK(android_fdsan_exchange_owner_tag, uint64_t, int fd, uint64
 int android_fdsan_close_with_tag(int fd, uint64_t tag) __attribute__((weak));
 HYBRIS_IMPLEMENT_HOOK(android_fdsan_close_with_tag, int, int fd, uint64_t tag)
 
+// android linker namespace support (used in dlopen_ext and beyond)
+void* android_create_namespace(const char* name, const char* ld_library_path,
+                               const char* default_library_path, uint64_t type,
+                               const char* permitted_when_isolated_path,
+                               void* parent_namespace) __attribute__((weak));
+HYBRIS_IMPLEMENT_HOOK6(android_create_namespace, void*, const char*, const char*, const char*, uint64_t, const char*, void*)
+
+void* android_get_exported_namespace(const char* name) __attribute__((weak));
+HYBRIS_IMPLEMENT_HOOK(android_get_exported_namespace, void*, const char*)
+
+int android_init_anonymous_namespace(const char* public_ns_sonames, const char* anon_ns_library_path) __attribute__((weak));
+HYBRIS_IMPLEMENT_HOOK(android_init_anonymous_namespace, int, const char*, const char*)
+
 #ifdef WANT_ARM_TRACING
 #include "wrappers.h"
 #endif
