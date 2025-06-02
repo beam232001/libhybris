@@ -35,7 +35,8 @@ libhybris_common_la_SOURCES = \
 	sysconf.c \
 	dso_handle_counters.cpp \
 	legacy_properties/properties.c \
-	legacy_properties/cache.c
+	legacy_properties/cache.c \
+	hooks.cpp
 
 if WANT_RUNTIME_PROPERTY_CACHE
 libhybris_common_la_SOURCES += \
