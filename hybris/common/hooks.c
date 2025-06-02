@@ -3985,3 +3985,21 @@ HYBRIS_IMPLEMENT_HOOK_VOID(__loader_shared_globals, void*)
 // Used by dlopen_ext / warning emission logic in newer linker
 void android_dlwarning(void* obj, void (*f)(void*, const char*)) __attribute__((weak));
 HYBRIS_IMPLEMENT_HOOK(android_dlwarning, void, void*, void (*)(void*, const char*))
+
+static void _hybris_hook_android_fdsan_set_error_level(int level)
+{
+    // Stub for AOSP 15 compatibility — ignore FD sanitizer level
+}
+
+static uint64_t _hybris_hook_android_fdsan_exchange_owner_tag(int fd, uint64_t expected_tag, uint64_t new_tag)
+{
+    // Stub for AOSP 15 compatibility — return new_tag as no-op
+    return new_tag;
+}
+
+static int _hybris_hook_android_fdsan_close_with_tag(int fd, uint64_t tag)
+{
+    // Stub for AOSP 15 compatibility — just close the fd
+    return close(fd);
+}
+
